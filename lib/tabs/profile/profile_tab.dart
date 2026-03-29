@@ -1,9 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
-import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/tabs/profile/custom_dropdown_menu.dart';
 import 'package:evently/tabs/profile/custom_theme_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../utils/evently_colors.dart';
 
