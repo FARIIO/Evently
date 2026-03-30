@@ -4,4 +4,8 @@ class EventlyImages {
   static String secondPageView = "assets/images/second_page_view.png";
   static String thirdPageView = "assets/images/third_page_view.png";
   static String fourthPageView = "assets/images/fourth_page_view.png";
+  static String firstPageViewNight = "assets/images/first_page_view_night.png";
+  static String secondPageViewNight = "assets/images/second_page_view_night.png";
+  static String thirdPageViewNight = "assets/images/third_page_view_night.png";
+  static String fourthPageViewNight = "assets/images/fourth_page_view_night.png";
 }

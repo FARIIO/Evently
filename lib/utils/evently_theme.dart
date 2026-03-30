@@ -32,8 +32,17 @@ class EventlyTheme {
           backgroundColor: EventlyColors.darkBlue
       ),
       textTheme: TextTheme(
-
+          titleLarge: EventlyTextStyle.whiteSemiBold20,
+          titleMedium: EventlyTextStyle.whiteSecW40016,
+          titleSmall: EventlyTextStyle.whiteSemiBold14,
+          bodyLarge: EventlyTextStyle.whiteSemiBold24,
+          bodyMedium: EventlyTextStyle.whiteW50020,
+          bodySmall: EventlyTextStyle.darkGreyW40014,
+          labelMedium: EventlyTextStyle.whiteSemiBold18,
+          labelSmall: EventlyTextStyle.whiteSemiBold14
       ),
-      primaryColor: EventlyColors.white
+      primaryColor: EventlyColors.lightBlue,
+    cardColor: EventlyColors.blueDarkInputs,
+    dividerColor: EventlyColors.blueDarkStroke
   );
 }
