@@ -1,8 +1,6 @@
 import 'package:evently/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../l10n/app_localizations.dart';
 import '../utils/dimensions.dart';
 import '../utils/evently_colors.dart';
 
