@@ -1,4 +1,5 @@
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/tabs/profile/custom_dropdown_menu.dart';
 import 'package:evently/tabs/profile/custom_theme_switch.dart';
 import 'package:evently/utils/evently_colors.dart';
@@ -8,6 +9,7 @@ import 'package:evently/widgets/custom_elevated_button.dart';
 import 'package:evently/widgets/custom_language_container.dart';
 import 'package:evently/widgets/custom_theme_mode_container.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../utils/dimensions.dart';
@@ -16,6 +18,7 @@ import '../utils/evently_routes.dart';
 class IntroScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+  var themeProvider = Provider.of<ThemeProvider>(context);
     var width = context.width;
     var height = context.height;
 
@@ -32,7 +35,11 @@ class IntroScreen extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(EventlyImages.evently),
-                Image.asset(EventlyImages.firstPageView),
+                Image.asset(
+                    themeProvider.isDark
+                        ? EventlyImages.fourthPageViewNight
+                        : EventlyImages.firstPageView
+                ),
                 Text(
                   AppLocalizations.of(context)!.onboarding1Title,
                   style: Theme.of(context).textTheme.titleLarge,

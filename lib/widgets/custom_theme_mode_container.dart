@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../utils/dimensions.dart';
 import '../utils/evently_colors.dart';
+import '../utils/evently_theme.dart';
 
 class CustomThemeModeContainer extends StatefulWidget{
   String icon;
@@ -47,7 +48,19 @@ class _CustomThemeModeContainerState extends State<CustomThemeModeContainer> {
             horizontal: width * 0.04,
             vertical: height*0.01
         ),
-        decoration: BoxDecoration(
+        decoration:
+        themeProvider.isDark
+        ? BoxDecoration(
+          color: isSelected ?
+          Theme.of(context).primaryColor :
+          Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(8),
+            border: BoxBorder.all(
+                color: EventlyTheme.darkTheme.dividerColor,
+                width: 1.5
+            )
+        ):
+        BoxDecoration(
           color: isSelected ?
           EventlyColors.mainBlue :
           EventlyColors.white,
@@ -59,7 +72,11 @@ class _CustomThemeModeContainerState extends State<CustomThemeModeContainer> {
           colorFilter:
           isSelected ?
           ColorFilter.mode(EventlyColors.white, BlendMode.srcIn) :
-          ColorFilter.mode(EventlyColors.mainBlue, BlendMode.srcIn),
+          ColorFilter.mode(
+              themeProvider.isDark
+              ? EventlyColors.white
+              : EventlyColors.mainBlue,
+              BlendMode.srcIn),
         )
       ),
     );
