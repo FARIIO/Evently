@@ -2,6 +2,7 @@ import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/screens/home_screen.dart';
+import 'package:evently/screens/intro_screen.dart';
 import 'package:evently/screens/login_screen.dart';
 import 'package:evently/screens/onboarding_screen.dart';
 import 'package:evently/tabs/profile/profile_tab.dart';
@@ -37,8 +38,9 @@ class Evently extends StatelessWidget{
       theme: EventlyTheme.lightTheme,
       darkTheme: EventlyTheme.darkTheme,
       themeMode: themeProvider.appTheme,
-      initialRoute: EventlyRoutes.onboardingScreen,
+      initialRoute: EventlyRoutes.profileTab,
       routes: {
+        EventlyRoutes.introScreen : (context) => IntroScreen(),
         EventlyRoutes.onboardingScreen : (context) => OnBoardingScreen(),
         EventlyRoutes.homeScreen : (context) => HomeScreen(),
         EventlyRoutes.profileTab : (context) => ProfileTab(),
