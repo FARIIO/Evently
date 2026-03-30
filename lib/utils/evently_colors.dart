@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 class EventlyColors {
+  static Color transparent = Color(0x000000ff);
   static Color darkBlue = Color(0xFF000F30);
   static Color blueDarkInputs = Color(0xFF001440);
   static Color blueDarkStroke = Color(0xFF002D8F);
