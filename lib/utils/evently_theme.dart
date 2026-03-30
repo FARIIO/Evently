@@ -8,12 +8,20 @@ class EventlyTheme {
     appBarTheme: AppBarThemeData(
       backgroundColor: EventlyColors.whiteBg,
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: EventlyColors.mainBlue,
+      selectionColor: EventlyColors.lightBlue.withAlpha(35),
+      selectionHandleColor: EventlyColors.mainBlue
+    ),
     textTheme: TextTheme(
       titleLarge: EventlyTextStyle.blackSemiBold20,
       titleMedium: EventlyTextStyle.greyW40016,
       titleSmall: EventlyTextStyle.mainBlueSemiBold14,
       bodyLarge: EventlyTextStyle.mainBlueSemiBold24,
       bodyMedium: EventlyTextStyle.whiteW50020,
+      bodySmall: EventlyTextStyle.darkGreyW40014,
+      labelMedium: EventlyTextStyle.mainBlueSemiBold18,
+      labelSmall: EventlyTextStyle.whiteSemiBold14
     ),
     primaryColor: EventlyColors.mainBlue
   );

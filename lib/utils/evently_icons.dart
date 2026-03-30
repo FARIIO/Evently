@@ -1,0 +1,4 @@
+class EventlyIcons {
+  static final String darkMode = "assets/icons/night_mode_icon.svg";
+  static final String lightMode = "assets/icons/light_mode_icon.svg";
+}

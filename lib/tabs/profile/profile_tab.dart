@@ -1,6 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/tabs/profile/custom_dropdown_menu.dart';
 import 'package:evently/tabs/profile/custom_theme_switch.dart';
+import 'package:evently/utils/evently_routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/evently_colors.dart';
@@ -44,13 +45,17 @@ class _ProfileTabState extends State<ProfileTab> {
                    AppLocalizations.of(context)!.darkMode,
                    style: TextStyle(
                      fontSize: 20,
+                     color: Colors.black
                    ),
                  ),
                  CustomThemeSwitch()
                ],
              ),
            ),
-         )
+         ),
+         ElevatedButton(onPressed: () {
+           Navigator.pushNamed(context, EventlyRoutes.introScreen);
+         }, child: Text("intro"))
        ],
      ),
    );
