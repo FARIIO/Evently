@@ -10,13 +10,11 @@ import '../utils/evently_colors.dart';
 class CustomLanguageContainer extends StatefulWidget{
   String language;
   String langCode;
-  bool isSelected;
 
   CustomLanguageContainer({
     super.key,
     required this.language,
     required this.langCode,
-    this.isSelected = true
   });
 
   @override
@@ -24,24 +22,17 @@ class CustomLanguageContainer extends StatefulWidget{
 }
 
 class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
-  late bool isSelected;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    isSelected = widget.isSelected;
-  }
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
     var languageProvider = Provider.of<LanguageProvider>(context);
+    bool isSelected = languageProvider.appLanguage == widget.langCode;
     var width = context.width;
     var height = context.height;
     return InkWell(
       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
       onTap: () async {
           languageProvider.changeLanguage(widget.langCode);
-          isSelected = !isSelected;
           await CacheHelper.setData(key: "language_selected", value: widget.langCode);
           debugPrint("language selected is : ${CacheHelper.getData(key: "language_selected")}");
           setState(() {
@@ -57,8 +48,8 @@ class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
         themeProvider.isDark?
         BoxDecoration(
           color: isSelected ?
-          EventlyTheme.darkTheme.cardColor :
-          EventlyTheme.darkTheme.primaryColor,
+          EventlyTheme.darkTheme.primaryColor :
+          EventlyTheme.darkTheme.cardColor,
           borderRadius: BorderRadius.circular(8),
           border: BoxBorder.all(
             color: EventlyTheme.darkTheme.dividerColor,

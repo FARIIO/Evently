@@ -10,13 +10,11 @@ import '../utils/evently_theme.dart';
 class CustomThemeModeContainer extends StatefulWidget{
   String icon;
   ThemeMode themeMode;
-  bool isSelected;
 
   CustomThemeModeContainer({
     super.key,
     required this.icon,
     required this.themeMode,
-    this.isSelected = true
   });
 
   @override
@@ -24,25 +22,16 @@ class CustomThemeModeContainer extends StatefulWidget{
 }
 
 class _CustomThemeModeContainerState extends State<CustomThemeModeContainer> {
-  late  bool isSelected;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    isSelected = widget.isSelected;
-  }
-
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
-
+    bool isSelected = themeProvider.appTheme == widget.themeMode;
     var width = context.width;
     var height = context.height;
     return InkWell(
       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
       onTap: () async {
           themeProvider.changeTheme(widget.themeMode);
-          isSelected = !isSelected;
          await CacheHelper.setData(key: "theme_selected", value: widget.themeMode.name);
           debugPrint("theme selected is : ${CacheHelper.getData(key: "theme_selected")}");
           setState(() {
