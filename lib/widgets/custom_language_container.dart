@@ -43,7 +43,7 @@ class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
           languageProvider.changeLanguage(widget.langCode);
           isSelected = !isSelected;
           await CacheHelper.setData(key: "language_selected", value: widget.langCode);
-          debugPrint("language selected is : ${CacheHelper.getData(key: "theme_selected")}");
+          debugPrint("language selected is : ${CacheHelper.getData(key: "language_selected")}");
           setState(() {
 
           });
