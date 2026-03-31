@@ -1,3 +1,4 @@
+import 'package:evently/cache/cache_helper.dart';
 import 'package:evently/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,9 +40,14 @@ class _CustomThemeModeContainerState extends State<CustomThemeModeContainer> {
     var height = context.height;
     return InkWell(
       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
-      onTap: () {
+      onTap: () async {
           themeProvider.changeTheme(widget.themeMode);
           isSelected = !isSelected;
+         await CacheHelper.setData(key: "theme_selected", value: widget.themeMode.name);
+          debugPrint("theme selected is : ${CacheHelper.getData(key: "theme_selected")}");
+          setState(() {
+
+          });
       },
       child: Container(
         padding: EdgeInsets.symmetric(
