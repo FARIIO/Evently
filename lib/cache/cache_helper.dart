@@ -9,8 +9,7 @@ class CacheHelper {
   static Future<bool> setData({required dynamic key,required String value}){
    return sharedPreferences.setString(key, value);
   }
-  static dynamic getData({required dynamic key}){
+  static String? getData({required dynamic key}){
     return sharedPreferences.getString(key);
   }
-
 }
