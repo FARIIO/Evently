@@ -1,3 +1,4 @@
+import 'package:evently/cache/cache_helper.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/utils/evently_theme.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,14 @@ class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
     var height = context.height;
     return InkWell(
       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
-      onTap: () {
+      onTap: () async {
           languageProvider.changeLanguage(widget.langCode);
           isSelected = !isSelected;
+          await CacheHelper.setData(key: "language_selected", value: widget.langCode);
+          debugPrint("language selected is : ${CacheHelper.getData(key: "theme_selected")}");
+          setState(() {
+
+          });
       },
       child: Container(
         padding: EdgeInsets.symmetric(

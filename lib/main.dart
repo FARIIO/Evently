@@ -1,3 +1,4 @@
+import 'package:evently/cache/cache_helper.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
@@ -11,7 +12,9 @@ import 'package:evently/utils/evently_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+   await CacheHelper.cacheInit();
   runApp(
       MultiProvider(
         providers: [
