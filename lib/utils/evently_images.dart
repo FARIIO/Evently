@@ -8,4 +8,6 @@ class EventlyImages {
   static String secondPageViewNight = "assets/images/second_page_view_night.png";
   static String thirdPageViewNight = "assets/images/third_page_view_night.png";
   static String fourthPageViewNight = "assets/images/fourth_page_view_night.png";
+  static String forgetPasswordLight = "assets/images/forget_password_light.png";
+  static String forgetPasswordNight = "assets/images/forget_password_dark.png";
 }
