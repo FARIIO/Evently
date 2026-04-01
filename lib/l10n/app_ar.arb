@@ -31,6 +31,7 @@
     "confirmPassword": "تأكيد كلمة المرور",
     "signUp": "إنشاء حساب",
     "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "createYourAccount": "أنشئ حسابك",
     "signUpWithGoogle": "التسجيل بجوجل",
     "forgetPasswordTitle": "نسيت كلمة المرور",
     "resetPassword": "إعادة تعيين كلمة المرور"

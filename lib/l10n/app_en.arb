@@ -31,6 +31,7 @@
     "confirmPassword": "Confirm your password",
     "signUp": "Sign up",
     "alreadyHaveAccount": "Already have an account?",
+    "createYourAccount": "Create your account",
     "signUpWithGoogle": "Sign up with Google",
     "forgetPasswordTitle": "Forget Password",
     "resetPassword": "Reset password"

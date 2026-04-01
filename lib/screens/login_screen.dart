@@ -154,6 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onForgetPasswordClicked() {
-    Navigator.pushNamed(context, EventlyRoutes.forgetPassword);
+    Navigator.pushReplacementNamed(context, EventlyRoutes.forgetPassword);
   }
 }
