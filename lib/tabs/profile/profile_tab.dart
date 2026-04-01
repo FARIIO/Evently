@@ -54,7 +54,7 @@ class _ProfileTabState extends State<ProfileTab> {
            ),
          ),
          ElevatedButton(onPressed: () {
-           Navigator.pushNamed(context, EventlyRoutes.introScreen);
+           Navigator.pushNamed(context, EventlyRoutes.loginScreen);
          }, child: Text("intro"))
        ],
      ),

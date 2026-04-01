@@ -21,9 +21,12 @@ class EventlyTheme {
       bodyMedium: EventlyTextStyle.whiteW50020,
       bodySmall: EventlyTextStyle.darkGreyW40014,
       labelMedium: EventlyTextStyle.mainBlueSemiBold18,
-      labelSmall: EventlyTextStyle.whiteSemiBold14
+      labelSmall: EventlyTextStyle.whiteSemiBold14,
+      displaySmall: EventlyTextStyle.mainBlueSemiBold14
     ),
-    primaryColor: EventlyColors.mainBlue
+      primaryColor: EventlyColors.mainBlue,
+      cardColor: EventlyColors.white,
+      dividerColor: EventlyColors.whiteLightStroke
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -31,18 +34,24 @@ class EventlyTheme {
       appBarTheme: AppBarThemeData(
           backgroundColor: EventlyColors.darkBlue
       ),
+      textSelectionTheme: TextSelectionThemeData(
+          cursorColor: EventlyColors.mainBlue,
+          selectionColor: EventlyColors.lightBlue.withAlpha(35),
+          selectionHandleColor: EventlyColors.mainBlue
+      ),
       textTheme: TextTheme(
           titleLarge: EventlyTextStyle.whiteSemiBold20,
           titleMedium: EventlyTextStyle.whiteSecW40016,
           titleSmall: EventlyTextStyle.whiteSemiBold14,
           bodyLarge: EventlyTextStyle.whiteSemiBold24,
           bodyMedium: EventlyTextStyle.whiteW50020,
-          bodySmall: EventlyTextStyle.darkGreyW40014,
+          bodySmall: EventlyTextStyle.secDarkW40014,
           labelMedium: EventlyTextStyle.whiteSemiBold18,
-          labelSmall: EventlyTextStyle.whiteSemiBold14
+          labelSmall: EventlyTextStyle.lightBlueSemiBold14,
+          displayMedium: EventlyTextStyle.lightBlueSemiBold18,
       ),
       primaryColor: EventlyColors.lightBlue,
-    cardColor: EventlyColors.blueDarkInputs,
-    dividerColor: EventlyColors.blueDarkStroke
+      cardColor: EventlyColors.blueDarkInputs,
+      dividerColor: EventlyColors.blueDarkStroke
   );
 }

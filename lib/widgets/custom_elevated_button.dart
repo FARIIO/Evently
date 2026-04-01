@@ -1,23 +1,36 @@
+import 'package:evently/providers/theme_provider.dart';
+import 'package:evently/utils/evently_colors.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:flutter/material.dart';
-
-import '../l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../utils/dimensions.dart';
 
 class CustomElevatedButton extends StatelessWidget{
-  PageController controller;
+  void Function()? onButtonClick;
+  PageController? controller;
   String title;
+  TextStyle? textStyle;
   int index;
+  bool isLogo;
+  bool isBorder;
+  Color? buttonColor;
 
   CustomElevatedButton({
     super.key,
-    required this.controller,
+    this.controller,
     required this.title,
-    required this.index,
+    this.index = 0,
+    this.isLogo = false,
+    required this.textStyle,
+    required this.onButtonClick,
+    required this.buttonColor,
+    this.isBorder = false
   });
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
     var width = context.width;
     var height = context.height;
 
@@ -27,33 +40,55 @@ class CustomElevatedButton extends StatelessWidget{
       ),
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).primaryColor
-              ),
+              backgroundColor: WidgetStatePropertyAll(buttonColor),
+              overlayColor: WidgetStatePropertyAll(buttonColor),
+              shadowColor: WidgetStatePropertyAll(EventlyColors.transparent),
               shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(16),
+                    side: isBorder
+                        ? BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1.5
+                    )
+                        : BorderSide(
+                      color: EventlyColors.transparent
+                    )
                   )
               )
           ),
-          onPressed: (){
-            index == 2
-                ? Navigator.pushReplacementNamed(context, EventlyRoutes.loginScreen)
-                : controller.nextPage(
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeIn );
-          },
+          onPressed: onButtonClick,
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: height*0.015,
             ),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: isLogo,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: width * 0.04
+                        ),
+                        child: FaIcon(
+                        FontAwesomeIcons.google,
+                          color:
+                          themeProvider.isDark
+                              ? EventlyColors.lightBlue
+                              : EventlyColors.mainBlue,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                Text(
+                  title,
+                  style: textStyle,
+                ),
+              ],
             ),
           )
       ),
     );
   }
-
 }

@@ -23,6 +23,11 @@ class EventlyTextStyle {
       color: EventlyColors.white,
       fontWeight: FontWeight.w600
   );
+  static TextStyle lightBlueSemiBold18 = GoogleFonts.poppins(
+      fontSize: 18,
+      color: EventlyColors.lightBlue,
+      fontWeight: FontWeight.w600
+  );
   static TextStyle mainBlueSemiBold24 = GoogleFonts.poppins(
       fontSize: 24,
       color: EventlyColors.mainBlue,
@@ -62,5 +67,15 @@ class EventlyTextStyle {
       fontSize: 14,
       color: EventlyColors.grey,
       fontWeight: FontWeight.w400
+  );
+  static TextStyle secDarkW40014 = GoogleFonts.poppins(
+      fontSize: 14,
+      color: EventlyColors.whiteDarkSecText,
+      fontWeight: FontWeight.w400
+  );
+  static TextStyle lightBlueSemiBold14 = GoogleFonts.poppins(
+      fontSize: 14,
+      color: EventlyColors.lightBlue,
+      fontWeight: FontWeight.w600
   );
 }
