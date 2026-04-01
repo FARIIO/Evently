@@ -109,6 +109,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get alreadyHaveAccount => 'هل لديك حساب بالفعل؟';
 
   @override
+  String get createYourAccount => 'أنشئ حسابك';
+
+  @override
   String get signUpWithGoogle => 'التسجيل بجوجل';
 
   @override

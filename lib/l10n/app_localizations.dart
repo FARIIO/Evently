@@ -290,6 +290,12 @@ abstract class AppLocalizations {
   /// **'Already have an account?'**
   String get alreadyHaveAccount;
 
+  /// No description provided for @createYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get createYourAccount;
+
   /// No description provided for @signUpWithGoogle.
   ///
   /// In en, this message translates to:
