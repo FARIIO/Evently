@@ -43,12 +43,11 @@ class Evently extends StatelessWidget{
       theme: EventlyTheme.lightTheme,
       darkTheme: EventlyTheme.darkTheme,
       themeMode: themeProvider.appTheme,
-      initialRoute: EventlyRoutes.introScreen,
+      initialRoute: EventlyRoutes.homeScreen,
       routes: {
         EventlyRoutes.introScreen : (context) => IntroScreen(),
         EventlyRoutes.onboardingScreen : (context) => OnBoardingScreen(),
         EventlyRoutes.homeScreen : (context) => HomeScreen(),
-        EventlyRoutes.profileTab : (context) => ProfileTab(),
         EventlyRoutes.loginScreen : (context) => LoginScreen(),
         EventlyRoutes.signupScreen : (context) => SignupScreen(),
         EventlyRoutes.forgetPassword : (context) => ForgetPasswordScreen(),

@@ -15,6 +15,7 @@ class IntroScreen extends StatelessWidget{
   var themeProvider = Provider.of<ThemeProvider>(context);
     var width = context.width;
     var height = context.height;
+    bool isSelected = false;
 
     return Scaffold(
       body: Padding(
@@ -74,7 +75,7 @@ class IntroScreen extends StatelessWidget{
                   Spacer(),
                  CustomThemeModeContainer(
                    themeMode: ThemeMode.light,
-                     icon: EventlyIcons.lightMode
+                   icon: EventlyIcons.lightMode ,
                  ),
                  CustomThemeModeContainer(
                    themeMode: ThemeMode.dark,
