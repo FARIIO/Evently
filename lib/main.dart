@@ -2,10 +2,12 @@ import 'package:evently/cache/cache_helper.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
+import 'package:evently/screens/forget_password_screen.dart';
 import 'package:evently/screens/home_screen.dart';
 import 'package:evently/screens/intro_screen.dart';
 import 'package:evently/screens/login_screen.dart';
 import 'package:evently/screens/onboarding_screen.dart';
+import 'package:evently/screens/signup_screen.dart';
 import 'package:evently/tabs/profile/profile_tab.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:evently/utils/evently_theme.dart';
@@ -41,13 +43,15 @@ class Evently extends StatelessWidget{
       theme: EventlyTheme.lightTheme,
       darkTheme: EventlyTheme.darkTheme,
       themeMode: themeProvider.appTheme,
-      initialRoute: EventlyRoutes.introScreen,
+      initialRoute: EventlyRoutes.profileTab,
       routes: {
         EventlyRoutes.introScreen : (context) => IntroScreen(),
         EventlyRoutes.onboardingScreen : (context) => OnBoardingScreen(),
         EventlyRoutes.homeScreen : (context) => HomeScreen(),
         EventlyRoutes.profileTab : (context) => ProfileTab(),
         EventlyRoutes.loginScreen : (context) => LoginScreen(),
+        EventlyRoutes.signupScreen : (context) => SignupScreen(),
+        EventlyRoutes.forgetPassword : (context) => ForgetPasswordScreen(),
       },
     );
   }

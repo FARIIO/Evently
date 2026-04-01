@@ -2,52 +2,99 @@ import 'dart:ui';
 
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/main.dart';
+import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:evently/utils/evently_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CustomTextFormField extends StatelessWidget{
+class CustomTextFormField extends StatefulWidget{
   Widget prefixIcon;
   String hintText;
+  bool isSuffixIcon;
+  bool showPassword;
 
   CustomTextFormField({
     super.key,
     required this.prefixIcon,
-    required this.hintText
+    required this.hintText,
+    this.isSuffixIcon = false,
+    this.showPassword = false
   });
+
+  @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
     var height = context.height;
-    return TextFormField(
-      style: Theme.of(context).textTheme.bodySmall,
-      cursorColor: EventlyColors.mainBlue,
-      cursorHeight: height * 0.03,
-      textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.emailAddress,
-      autocorrect: false,
-      decoration: InputDecoration(
-        iconColor: EventlyColors.mainBlue,
-        prefixIcon: prefixIcon,
-          prefixIconColor: EventlyColors.greyDisable,
-          hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.bodySmall,
-        hoverColor: EventlyColors.white,
-        focusColor: EventlyColors.white,
-        border: buildOutlineInputBorder(),
-        enabledBorder: buildOutlineInputBorder(),
-        focusedBorder: buildOutlineInputBorder(),
-        errorBorder: buildOutlineInputBorder(),
-        disabledBorder: buildOutlineInputBorder(),
-        fillColor: EventlyColors.white
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: height*0.01
+      ),
+      child: TextFormField(
+        style: Theme.of(context).textTheme.bodySmall,
+        cursorColor: EventlyColors.mainBlue,
+        cursorHeight: height * 0.03,
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.emailAddress,
+        autocorrect: false,
+        decoration: InputDecoration(
+          filled: true,
+          prefixIcon: widget.prefixIcon,
+            prefixIconColor: EventlyColors.greyDisable,
+            hintText: widget.hintText,
+          hintStyle: Theme.of(context).textTheme.bodySmall,
+          hoverColor:
+          themeProvider.isDark
+              ? Theme.of(context).primaryColor
+              : EventlyColors.white,
+          focusColor:
+          themeProvider.isDark
+              ? Theme.of(context).primaryColor
+              : EventlyColors.white,
+          border: buildOutlineInputBorder(themeProvider),
+          enabledBorder: buildOutlineInputBorder(themeProvider),
+          focusedBorder: buildOutlineInputBorder(themeProvider),
+          errorBorder: buildOutlineInputBorder(themeProvider),
+          disabledBorder: buildOutlineInputBorder(themeProvider),
+          fillColor:
+          themeProvider.isDark
+              ? Theme.of(context).cardColor
+              : EventlyColors.white,
+          suffixIcon:
+          widget.isSuffixIcon
+              ? IconButton(
+              onPressed: () {
+                widget.showPassword = !widget.showPassword;
+                setState(() {
+                });
+              },
+              highlightColor: EventlyColors.transparent,
+              icon:
+              widget.showPassword
+                  ? Icon(Icons.remove_red_eye_outlined)
+                  : Icon(Icons.remove_red_eye_rounded)
+          )
+              : SizedBox(),
+          suffixIconColor: EventlyColors.greyDisable
+        ),
       ),
     );
   }
-OutlineInputBorder buildOutlineInputBorder(){
+
+OutlineInputBorder buildOutlineInputBorder(dynamic themeProvider){
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(16),
     borderSide: BorderSide(
-      color: EventlyColors.greyDisable,
-      width: 1.5
+      color:
+      themeProvider.isDark?
+      Theme.of(context).dividerColor:
+      Theme.of(context).dividerColor,
+      width: 1
     )
   );
 }

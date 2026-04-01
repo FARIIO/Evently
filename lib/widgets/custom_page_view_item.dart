@@ -8,8 +8,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../providers/theme_provider.dart';
 import '../utils/dimensions.dart';
+import '../utils/evently_routes.dart';
 
-class CustomPageViewItem extends StatelessWidget{
+class CustomPageViewItem extends StatefulWidget{
   String pageViewImage;
   String title;
   String description;
@@ -24,6 +25,12 @@ class CustomPageViewItem extends StatelessWidget{
     required this.controller,
     required this.index
   });
+
+  @override
+  State<CustomPageViewItem> createState() => _CustomPageViewItemState();
+}
+
+class _CustomPageViewItemState extends State<CustomPageViewItem> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
@@ -42,7 +49,7 @@ class CustomPageViewItem extends StatelessWidget{
             children: [
               Row(
                 children: [
-                  index > 0
+                  widget.index > 0
                       ? Expanded(
                     child: Container(
                       padding: EdgeInsetsGeometry.symmetric(
@@ -64,7 +71,7 @@ class CustomPageViewItem extends StatelessWidget{
                           highlightColor: EventlyColors.transparent,
                           iconSize: 20,
                           onPressed: (){
-                            controller.previousPage(
+                            widget.controller.previousPage(
                                 duration: Duration(
                                     milliseconds: 500),
                                 curve: Curves.easeIn
@@ -91,7 +98,7 @@ class CustomPageViewItem extends StatelessWidget{
                     child: InkWell(
                       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
                       onTap: () {
-                        controller.jumpToPage(3);
+                        widget.controller.jumpToPage(3);
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -121,7 +128,7 @@ class CustomPageViewItem extends StatelessWidget{
                   ),
                 ],
               ),
-              Expanded(child: Image.asset(pageViewImage)),
+              Expanded(child: Image.asset(widget.pageViewImage)),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: height*0.02
@@ -140,31 +147,42 @@ class CustomPageViewItem extends StatelessWidget{
                         ? Theme.of(context).primaryColor
                         : EventlyColors.mainBlue
                     ),
-                      controller: controller,
+                      controller: widget.controller,
                       count: 3
                   ),
                 ),
               ),
               Text(
-                title,
+                widget.title,
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.start,
               ),
               Text(
-                  description,
+                  widget.description,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               CustomElevatedButton(
-                index: index == 2 ? 2 : index,
-                title: index == 2
+                index: widget.index == 2 ? 2 : widget.index,
+                title: widget.index == 2
                     ? AppLocalizations.of(context)!.getStarted
                     : AppLocalizations.of(context)!.next,
-                controller: controller,
+                controller: widget.controller,
+                onButtonClick: navigateToLoginScreen,
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                buttonColor: Theme.of(context).primaryColor,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void navigateToLoginScreen (){
+      widget.index == 2
+        ? Navigator.pushReplacementNamed(context, EventlyRoutes.loginScreen)
+        : widget.controller.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeIn );
   }
 }
