@@ -1,3 +1,4 @@
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -39,19 +40,22 @@ class _CustomNavBarState extends State<CustomNavBar> {
       },
       type: BottomNavigationBarType.fixed,
       items: [
-        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.house),label: "Home",
+        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.house),
+          label: AppLocalizations.of(context)!.home,
           activeIcon: FaIcon(
             FontAwesomeIcons.solidHouse,
             color: Theme.of(context).primaryColor,
           ),
         ),
-        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.heart),label: "Favorite",
+        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.heart),
+          label: AppLocalizations.of(context)!.favorite,
           activeIcon: FaIcon(
             FontAwesomeIcons.solidHeart,
             color: Theme.of(context).primaryColor,
           ),
         ),
-        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.user),label: "Profile",
+        BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.user),
+          label: AppLocalizations.of(context)!.profile,
           activeIcon: FaIcon(
             FontAwesomeIcons.solidUser,
             color: Theme.of(context).primaryColor,

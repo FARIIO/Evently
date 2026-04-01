@@ -34,5 +34,8 @@
     "createYourAccount": "أنشئ حسابك",
     "signUpWithGoogle": "التسجيل بجوجل",
     "forgetPasswordTitle": "نسيت كلمة المرور",
-    "resetPassword": "إعادة تعيين كلمة المرور"
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "home": "الرئيسية",
+    "favorite": "المفضلة",
+    "profile": "الملف الشخصي"
 }

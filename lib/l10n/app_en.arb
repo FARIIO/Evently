@@ -34,5 +34,8 @@
     "createYourAccount": "Create your account",
     "signUpWithGoogle": "Sign up with Google",
     "forgetPasswordTitle": "Forget Password",
-    "resetPassword": "Reset password"
+    "resetPassword": "Reset password",
+    "home": "Home",
+    "favorite": "Favorite",
+    "profile": "Profile"
 }
