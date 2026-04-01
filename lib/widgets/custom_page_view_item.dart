@@ -52,8 +52,6 @@ class _CustomPageViewItemState extends State<CustomPageViewItem> {
                   widget.index > 0
                       ? Expanded(
                     child: Container(
-                      padding: EdgeInsetsGeometry.symmetric(
-                      ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color:

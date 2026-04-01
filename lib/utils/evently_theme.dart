@@ -22,7 +22,7 @@ class EventlyTheme {
       bodySmall: EventlyTextStyle.darkGreyW40014,
       labelMedium: EventlyTextStyle.mainBlueSemiBold18,
       labelSmall: EventlyTextStyle.whiteSemiBold14,
-      displaySmall: EventlyTextStyle.mainBlueSemiBold14
+      displaySmall: EventlyTextStyle.mainBlueSemiBold14,
     ),
       primaryColor: EventlyColors.mainBlue,
       cardColor: EventlyColors.white,

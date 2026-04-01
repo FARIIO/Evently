@@ -64,7 +64,7 @@ class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
         ),
         child: Text(
           widget.language,
-          style: isSelected
+          style: isSelected && !themeProvider.isDark
               ? Theme.of(context).textTheme.labelSmall
               : Theme.of(context).textTheme.titleSmall,
         ),
