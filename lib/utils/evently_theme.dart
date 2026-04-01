@@ -23,10 +23,11 @@ class EventlyTheme {
       labelMedium: EventlyTextStyle.mainBlueSemiBold18,
       labelSmall: EventlyTextStyle.whiteSemiBold14,
       displaySmall: EventlyTextStyle.mainBlueSemiBold14,
+      headlineSmall: EventlyTextStyle.lightBlueSemiBold12
     ),
       primaryColor: EventlyColors.mainBlue,
       cardColor: EventlyColors.white,
-      dividerColor: EventlyColors.whiteLightStroke
+      dividerColor: EventlyColors.whiteLightStroke,
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -49,9 +50,11 @@ class EventlyTheme {
           labelMedium: EventlyTextStyle.whiteSemiBold18,
           labelSmall: EventlyTextStyle.lightBlueSemiBold14,
           displayMedium: EventlyTextStyle.lightBlueSemiBold18,
+          headlineSmall: EventlyTextStyle.mainBlueSemiBold12
       ),
       primaryColor: EventlyColors.lightBlue,
       cardColor: EventlyColors.blueDarkInputs,
-      dividerColor: EventlyColors.blueDarkStroke
+      dividerColor: EventlyColors.blueDarkStroke,
+      highlightColor: EventlyColors.darkBlue
   );
 }
