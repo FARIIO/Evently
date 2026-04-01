@@ -78,4 +78,14 @@ class EventlyTextStyle {
       color: EventlyColors.lightBlue,
       fontWeight: FontWeight.w600
   );
+  static TextStyle lightBlueSemiBold12 = GoogleFonts.poppins(
+      fontSize: 12,
+      color: EventlyColors.lightBlue,
+      fontWeight: FontWeight.w600
+  );
+  static TextStyle mainBlueSemiBold12 = GoogleFonts.poppins(
+      fontSize: 12,
+      color: EventlyColors.mainBlue,
+      fontWeight: FontWeight.w600
+  );
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ProfileTab extends StatelessWidget{
+class HomeTab extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Placeholder(
-      color: Colors.green,
+      color: Colors.red,
     );
   }
 
