@@ -29,97 +29,95 @@ class IntroScreen extends StatelessWidget{
             vertical: height*0.01
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(EventlyImages.evently),
-                Image.asset(
+          child: Column(
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.asset(EventlyImages.evently),
+              Expanded(
+                child: Image.asset(
                     themeProvider.isDark
-                        ? EventlyImages.fourthPageViewNight
-                        : EventlyImages.firstPageView
+                        ? EventlyImages.firstPageViewNight
+                        : EventlyImages.firstPageView,
                 ),
-                Text(
-                  AppLocalizations.of(context)!.onboarding1Title,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.start,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.onboarding1Description,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Row(
-                  spacing: 8,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.language,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      Spacer(),
-                      CustomLanguageContainer(
-                        langCode: "en",
-                          language: AppLocalizations.of(context)!.english,
-                        isSelected: true,
-                      ),
-                      CustomLanguageContainer(
-                        langCode: "ar",
-                        language: AppLocalizations.of(context)!.arabic,
-                        isSelected: false,
-                      )
-                    ],
-                  ),
-                Row(
-                  spacing: 8,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              Text(
+                AppLocalizations.of(context)!.onboarding1Title,
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.start,
+              ),
+              Text(
+                AppLocalizations.of(context)!.onboarding1Description,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.theme,
+                      AppLocalizations.of(context)!.language,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     Spacer(),
-                   CustomThemeModeContainer(
-                     themeMode: ThemeMode.light,
-                       icon: EventlyIcons.lightMode
-                   ),
-                   CustomThemeModeContainer(
-                     themeMode: ThemeMode.dark,
-                     icon: EventlyIcons.darkMode,
-                     isSelected: false,),
+                    CustomLanguageContainer(
+                      langCode: "en",
+                      language: AppLocalizations.of(context)!.english,
+                    ),
+                    CustomLanguageContainer(
+                      langCode: "ar",
+                      language: AppLocalizations.of(context)!.arabic,
+                    )
                   ],
                 ),
-                Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: height*0.01
-              ),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(
-                          Theme.of(context).primaryColor
-                      ),
-                      shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadiusGeometry.circular(16),
-                          )
-                      )
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.theme,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  onPressed: (){
-                     Navigator.pushReplacementNamed(context, EventlyRoutes.onboardingScreen);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: height*0.015,
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.letsStart,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  )
+                  Spacer(),
+                 CustomThemeModeContainer(
+                   themeMode: ThemeMode.light,
+                     icon: EventlyIcons.lightMode
+                 ),
+                 CustomThemeModeContainer(
+                   themeMode: ThemeMode.dark,
+                   icon: EventlyIcons.darkMode,
+                 ),
+                ],
               ),
+              Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: height*0.01
             ),
-              ],
+            child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).primaryColor
+                    ),
+                    shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(16),
+                        )
+                    )
+                ),
+                onPressed: (){
+                   Navigator.pushReplacementNamed(context, EventlyRoutes.onboardingScreen);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: height*0.015,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.letsStart,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                )
             ),
+          ),
+            ],
           ),
         ),
       ),
