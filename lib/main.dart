@@ -9,14 +9,16 @@ import 'package:evently/screens/intro_screen.dart';
 import 'package:evently/screens/login_screen.dart';
 import 'package:evently/screens/onboarding_screen.dart';
 import 'package:evently/screens/signup_screen.dart';
-import 'package:evently/tabs/profile/profile_tab.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:evently/utils/evently_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final pref = await SharedPreferences.getInstance();
+  bool isOnboardingSeen = pref.getBool("onBoardingSeen") ?? false;
    await CacheHelper.cacheInit();
   runApp(
       MultiProvider(
@@ -24,13 +26,14 @@ void main() async {
          ChangeNotifierProvider(create: (context) => LanguageProvider(),),
          ChangeNotifierProvider(create: (context) => ThemeProvider(),),
         ],
-          child: Evently()
+          child: Evently(isOnboardingSeen: isOnboardingSeen,)
       )
   );
 }
 
 class Evently extends StatelessWidget{
-  Evently({super.key});
+  Evently({super.key, required this.isOnboardingSeen});
+    final bool isOnboardingSeen;
   @override
   Widget build(BuildContext context) {
   var languageProvider = Provider.of<LanguageProvider>(context);
@@ -44,7 +47,10 @@ class Evently extends StatelessWidget{
       theme: EventlyTheme.lightTheme,
       darkTheme: EventlyTheme.darkTheme,
       themeMode: themeProvider.appTheme,
-      initialRoute: EventlyRoutes.introScreen,
+      initialRoute:
+      isOnboardingSeen ?
+          EventlyRoutes.loginScreen
+          : EventlyRoutes.introScreen,
       routes: {
         EventlyRoutes.introScreen : (context) => IntroScreen(),
         EventlyRoutes.onboardingScreen : (context) => OnBoardingScreen(),

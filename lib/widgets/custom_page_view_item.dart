@@ -4,6 +4,7 @@ import 'package:evently/utils/evently_images.dart';
 import 'package:evently/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../providers/theme_provider.dart';
@@ -176,11 +177,13 @@ class _CustomPageViewItemState extends State<CustomPageViewItem> {
     );
   }
 
-  void navigateToLoginScreen (){
+  Future<void> navigateToLoginScreen () async {
       widget.index == 2
         ? Navigator.pushReplacementNamed(context, EventlyRoutes.loginScreen)
         : widget.controller.nextPage(
         duration: Duration(milliseconds: 500),
         curve: Curves.easeIn );
+      final pref = await SharedPreferences.getInstance();
+      pref.setBool("onBoardingSeen", true);
   }
 }
