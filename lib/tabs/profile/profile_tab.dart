@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/tabs/profile/custom_container_button.dart';
 import 'package:evently/tabs/profile/custom_dropdown_menu.dart';
 import 'package:evently/tabs/profile/custom_theme_switch.dart';
 import 'package:evently/utils/evently_images.dart';
+import 'package:evently/utils/pick_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +14,14 @@ import '../../providers/theme_provider.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/evently_colors.dart';
 
-class ProfileTab extends StatelessWidget{
+class ProfileTab extends StatefulWidget{
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+    File? pickedImage;
+
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
@@ -20,17 +30,51 @@ class ProfileTab extends StatelessWidget{
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.04,
-          vertical: height*0.01
+          vertical: height*0.03
       ),
       child: SafeArea(
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                EventlyImages.route,
+            InkWell(
+              highlightColor: EventlyColors.transparent,
+              overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
+              onTap: () async {
+                File? temp = await PickImage.galleryPicker();
+                if(temp!=null){
+                  pickedImage = temp;
+                }
+                setState(() {
+                });
+              },
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children:[ 
+                  CircleAvatar(
+                  backgroundImage: pickedImage == null
+                      ? AssetImage(EventlyImages.route)
+                      : FileImage(pickedImage!) ,
+                  minRadius: height * 0.02,
+                  maxRadius: height * 0.08,
+                ),
+                  Container(
+                    padding: EdgeInsets.all(width*0.03),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:
+                      themeProvider.isDark
+                          ? EventlyColors.darkBlue
+                          : EventlyColors.whiteBg,
+                    ),
+                      child: FaIcon(
+                        FontAwesomeIcons.image,
+                        color:
+                        themeProvider.isDark
+                            ? EventlyColors.white
+                            : EventlyColors.mainBlue,
+                      )
+                  )
+                ]
               ),
-              minRadius: height * 0.02,
-              maxRadius: height * 0.08,
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -71,5 +115,4 @@ class ProfileTab extends StatelessWidget{
       ),
     );
   }
-
 }
