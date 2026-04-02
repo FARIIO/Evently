@@ -39,7 +39,7 @@ class _CustomThemeSwitchState extends State<CustomThemeSwitch> {
       activeThumbColor: EventlyColors.white,
       inactiveThumbColor: EventlyColors.white,
       inactiveTrackColor: EventlyColors.grey.withAlpha(50),
-      value: switchValue,
+      value: themeProvider.isDark ? switchValue = true : switchValue,
       onChanged: (value) async {
           switchValue = value;
           widget.themeMode = ThemeMode.dark;
@@ -49,7 +49,6 @@ class _CustomThemeSwitchState extends State<CustomThemeSwitch> {
           themeProvider.changeTheme(ThemeMode.light);
           themeProvider.changeTheme(widget.themeMode);
           await CacheHelper.setData(key: "theme_selected", value: widget.themeMode.name);
-          debugPrint("theme selected is : ${CacheHelper.getData(key: "theme_selected")}");
           setState(() {
 
           });

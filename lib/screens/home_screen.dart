@@ -1,6 +1,7 @@
 import 'package:evently/tabs/favorite/favorite_tab.dart';
 import 'package:evently/tabs/home/home_tab.dart';
 import 'package:evently/tabs/profile/profile_tab.dart';
+import 'package:evently/utils/evently_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       bottomNavigationBar: CustomNavBar(themeProvider, context),
       body: tabsList[newIndex],
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            Navigator.pushNamed(context, EventlyRoutes.addEventScreen);
+          },
+        shape: CircleBorder(),
+        backgroundColor: Theme.of(context).primaryColor,
+        hoverColor: Theme.of(context).primaryColor,
+        focusColor: Theme.of(context).primaryColor,
+        splashColor: Theme.of(context).primaryColor,
+        foregroundColor: EventlyColors.white,
+        child: FaIcon(
+            FontAwesomeIcons.plus,
+          size: 20,
+        ),
+      ),
     );
   }
 
