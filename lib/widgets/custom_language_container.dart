@@ -34,7 +34,6 @@ class _CustomLanguageContainerState extends State<CustomLanguageContainer> {
       onTap: () async {
           languageProvider.changeLanguage(widget.langCode);
           await CacheHelper.setData(key: "language_selected", value: widget.langCode);
-          debugPrint("language selected is : ${CacheHelper.getData(key: "language_selected")}");
           setState(() {
 
           });

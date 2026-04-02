@@ -33,7 +33,6 @@ class _CustomThemeModeContainerState extends State<CustomThemeModeContainer> {
       onTap: () async {
           themeProvider.changeTheme(widget.themeMode);
          await CacheHelper.setData(key: "theme_selected", value: widget.themeMode.name);
-          debugPrint("theme selected is : ${CacheHelper.getData(key: "theme_selected")}");
           setState(() {
 
           });

@@ -5,4 +5,5 @@ class EventlyRoutes {
   static String forgetPassword = "Forget_Password_Screen";
   static String introScreen = "Intro_Screen";
   static String onboardingScreen = "OnBoarding_Screen";
+  static String addEventScreen = "Add_Event_Screen";
 }
