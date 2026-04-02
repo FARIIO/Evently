@@ -82,6 +82,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login => 'تسجيل الدخول';
 
   @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
   String get dontHaveAccount => 'ليس لديك حساب؟';
 
   @override
