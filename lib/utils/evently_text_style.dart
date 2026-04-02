@@ -43,6 +43,16 @@ class EventlyTextStyle {
       color: EventlyColors.white,
       fontWeight: FontWeight.w500
   );
+  static TextStyle blackW50016 = GoogleFonts.poppins(
+      fontSize: 16,
+      color: EventlyColors.black,
+      fontWeight: FontWeight.w500
+  );
+  static TextStyle whiteW50016 = GoogleFonts.poppins(
+      fontSize: 16,
+      color: EventlyColors.white,
+      fontWeight: FontWeight.w500
+  );
   static TextStyle blackSemiBold20 = GoogleFonts.poppins(
     fontSize: 20,
     color: EventlyColors.black,

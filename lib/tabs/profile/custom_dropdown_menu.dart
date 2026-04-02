@@ -1,9 +1,10 @@
+import 'package:evently/cache/cache_helper.dart';
 import 'package:evently/utils/evently_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
+import '../../utils/dimensions.dart';
 
 class CustomDropdownMenu extends StatefulWidget{
   @override
@@ -14,19 +15,29 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
   String selectedLanguage = "en";
   @override
   Widget build(BuildContext context) {
+    var width = context.width;
+    var height = context.height;
     var languageProvider = Provider.of<LanguageProvider>(context);
-
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(
+          horizontal: width * 0.04,
+        vertical: height * 0.02
+      ),
       child: Container(
         decoration: BoxDecoration(
-          color: EventlyColors.white,
+          color: Theme.of(context).cardColor,
           border: BoxBorder.all(
-            color: EventlyColors.whiteLightStroke
+            color: Theme.of(context).dividerColor
           ),
           borderRadius: BorderRadius.circular(16),
         ),
         child: DropdownButton<String>(
+          hint: Text(
+            AppLocalizations.of(context)!.language,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          style: Theme.of(context).textTheme.headlineMedium,
+          dropdownColor: Theme.of(context).cardColor,
           padding: EdgeInsetsGeometry.symmetric(
               horizontal: 16
           ),
@@ -34,7 +45,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
           value: selectedLanguage,
           icon: Icon(
             Icons.arrow_forward_ios_rounded,
-            color: EventlyColors.mainBlue,
+            color: Theme.of(context).primaryColor,
           ),
           isExpanded: true,
           borderRadius: BorderRadius.circular(16),
@@ -42,18 +53,25 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
           items: [
             DropdownMenuItem(
                 value: "en",
-                child: Text(AppLocalizations.of(context)!.english),
+                child: Text(
+                  AppLocalizations.of(context)!.english,
+                ),
             ),
             DropdownMenuItem(
                 value: "ar",
-                child:  Text(AppLocalizations.of(context)!.arabic),
+                child:  Text(
+                    AppLocalizations.of(context)!.arabic,
+                ),
             )
           ],
-          onChanged: (String? newValue) {
-            setState(() {
+          onChanged: (String? newValue) async {
               selectedLanguage = newValue!;
               languageProvider.changeLanguage(newValue);
-            });
+              await CacheHelper.setData(key: "language_selected", value: selectedLanguage);
+              CacheHelper.getData(key: "language_selected");
+              setState(() {
+
+              });
           },
         ),
       ),

@@ -23,7 +23,8 @@ class EventlyTheme {
       labelMedium: EventlyTextStyle.mainBlueSemiBold18,
       labelSmall: EventlyTextStyle.whiteSemiBold14,
       displaySmall: EventlyTextStyle.mainBlueSemiBold14,
-      headlineSmall: EventlyTextStyle.lightBlueSemiBold12
+      headlineSmall: EventlyTextStyle.lightBlueSemiBold12,
+      headlineMedium: EventlyTextStyle.blackW50016
     ),
       primaryColor: EventlyColors.mainBlue,
       cardColor: EventlyColors.white,
@@ -50,7 +51,8 @@ class EventlyTheme {
           labelMedium: EventlyTextStyle.whiteSemiBold18,
           labelSmall: EventlyTextStyle.lightBlueSemiBold14,
           displayMedium: EventlyTextStyle.lightBlueSemiBold18,
-          headlineSmall: EventlyTextStyle.mainBlueSemiBold12
+          headlineSmall: EventlyTextStyle.mainBlueSemiBold12,
+          headlineMedium: EventlyTextStyle.whiteW50016
       ),
       primaryColor: EventlyColors.lightBlue,
       cardColor: EventlyColors.blueDarkInputs,

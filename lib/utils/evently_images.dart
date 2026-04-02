@@ -10,4 +10,5 @@ class EventlyImages {
   static String fourthPageViewNight = "assets/images/fourth_page_view_night.png";
   static String forgetPasswordLight = "assets/images/forget_password_light.png";
   static String forgetPasswordNight = "assets/images/forget_password_dark.png";
+  static String route = "assets/images/route.png";
 }

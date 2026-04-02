@@ -22,6 +22,7 @@
     "enterPassword": "Enter your password",
     "forgetPassword": "Forget Password?",
     "login": "Login",
+    "logout": "Logout",
     "dontHaveAccount": "Don't have an account?",
     "signup": "Signup",
     "or": "Or",

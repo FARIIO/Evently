@@ -22,6 +22,7 @@
     "enterPassword": "أدخل كلمة المرور",
     "forgetPassword": "نسيت كلمة المرور؟",
     "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
     "dontHaveAccount": "ليس لديك حساب؟",
     "signup": "إنشاء حساب",
     "or": "أو",
