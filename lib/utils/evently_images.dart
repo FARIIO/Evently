@@ -11,4 +11,14 @@ class EventlyImages {
   static String forgetPasswordLight = "assets/images/forget_password_light.png";
   static String forgetPasswordNight = "assets/images/forget_password_dark.png";
   static String route = "assets/images/route.png";
+  static String birthdayLight = "assets/images/Birthday_light.png";
+  static String bookClubLight = "assets/images/Book_Club_light.png";
+  static String exhibitionLight = "assets/images/Exhibition_light.png";
+  static String meetingLight = "assets/images/Meeting_light.png";
+  static String sportLight = "assets/images/Sport_light.png";
+  static String birthdayDark = "assets/images/Birthday_light.png";
+  static String sportDark = "assets/images/Sport.png";
+  static String bookClubDark = "assets/images/Book_Club.png";
+  static String exhibitionDark = "assets/images/Exhibition.png";
+  static String meetingDark = "assets/images/Meeting.png";
 }

@@ -38,5 +38,13 @@
     "resetPassword": "Reset password",
     "home": "Home",
     "favorite": "Favorite",
-    "profile": "Profile"
+    "profile": "Profile",
+    "en" : "EN",
+    "ar" : "AR",
+    "all": "All",
+    "sport": "Sport",
+    "birthday": "Birthday",
+    "bookClub": "Book Club",
+    "meeting": "Meeting",
+    "exhibition": "Exhibition"
 }
