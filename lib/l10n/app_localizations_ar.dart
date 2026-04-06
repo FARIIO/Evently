@@ -131,4 +131,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profile => 'الملف الشخصي';
+
+  @override
+  String get en => 'أنج';
+
+  @override
+  String get ar => 'ع';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get sport => 'الرياضة';
+
+  @override
+  String get birthday => 'أعياد ميلاد';
+
+  @override
+  String get bookClub => 'ملتقى الكتب';
+
+  @override
+  String get meeting => 'اجتماعات';
+
+  @override
+  String get exhibition => 'معارض فنية';
 }

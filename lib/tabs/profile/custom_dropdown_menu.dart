@@ -42,7 +42,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
               horizontal: 16
           ),
           underline: SizedBox(),
-          value: selectedLanguage,
+          value: languageProvider.appLanguage,
           icon: Icon(
             Icons.arrow_forward_ios_rounded,
             color: Theme.of(context).primaryColor,
