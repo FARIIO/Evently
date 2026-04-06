@@ -1,9 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/theme_provider.dart';
 import '../../../utils/evently_colors.dart';
 
