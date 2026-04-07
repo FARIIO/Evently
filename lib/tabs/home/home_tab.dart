@@ -4,15 +4,12 @@ import 'package:evently/tabs/home/widgets/event_item.dart';
 import 'package:evently/tabs/home/widgets/tab_widget.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:evently/utils/evently_colors.dart';
-import 'package:evently/widgets/custom_language_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../l10n/app_localizations.dart';
 import '../../utils/evently_icons.dart';
-import '../../widgets/custom_theme_mode_container.dart';
 
 class HomeTab extends StatefulWidget{
   @override
@@ -86,7 +83,7 @@ class _HomeTabState extends State<HomeTab> {
                       languageProvider.appLanguage == "en"?
                       AppLocalizations.of(context)!.en
                           : AppLocalizations.of(context)!.ar,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   )
                 )
               ],

@@ -158,4 +158,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get searchForEvent => 'ابحث عن مناسبة';
+
+  @override
+  String get addEvent => 'إضافة مناسبة';
 }

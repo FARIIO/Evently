@@ -47,5 +47,6 @@
     "bookClub": "ملتقى الكتب",
     "meeting": "اجتماعات",
     "exhibition": "معارض فنية",
-    "searchForEvent" : "ابحث عن مناسبة"
+    "searchForEvent" : "ابحث عن مناسبة",
+    "addEvent" : "إضافة مناسبة"
 }

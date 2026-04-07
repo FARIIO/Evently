@@ -3,6 +3,7 @@ import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/screens/add_event_screen.dart';
+import 'package:evently/screens/event_details_screen.dart';
 import 'package:evently/screens/forget_password_screen.dart';
 import 'package:evently/screens/home_screen.dart';
 import 'package:evently/screens/intro_screen.dart';
@@ -59,6 +60,7 @@ class Evently extends StatelessWidget{
         EventlyRoutes.signupScreen : (context) => SignupScreen(),
         EventlyRoutes.forgetPassword : (context) => ForgetPasswordScreen(),
         EventlyRoutes.addEventScreen : (context) => AddEventScreen(),
+        EventlyRoutes.eventDetailsScreen : (context) => EventDetailsScreen(),
       },
     );
   }
