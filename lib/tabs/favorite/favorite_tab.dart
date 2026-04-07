@@ -6,6 +6,8 @@ import 'package:evently/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
+
 class FavoriteTab extends StatefulWidget{
   @override
   State<FavoriteTab> createState() => _FavoriteTabState();
@@ -30,7 +32,13 @@ class _FavoriteTabState extends State<FavoriteTab> {
           child: Column(
             spacing: height * 0.02,
             children: [
-              SearchFormField(),
+              SearchFormField(
+                isSuffix: true,
+                hintText: AppLocalizations.of(context)!.searchForEvent,
+                validator: (value){
+                  return null;
+                },
+              ),
               Expanded(
                 child: ListView.separated(
                     itemBuilder: (context, index) {

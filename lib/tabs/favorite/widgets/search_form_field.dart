@@ -6,6 +6,17 @@ import '../../../providers/theme_provider.dart';
 import '../../../utils/evently_colors.dart';
 
 class SearchFormField extends StatefulWidget{
+  final bool isSuffix;
+  final String hintText;
+  final int maxLines;
+  String? Function(String?)? validator;
+   SearchFormField({
+    super.key,this.isSuffix = false,
+    required this.hintText,
+    this.maxLines = 1,
+    required this.validator
+  });
+
   @override
   State<SearchFormField> createState() => _SearchFormFieldState();
 }
@@ -16,15 +27,17 @@ class _SearchFormFieldState extends State<SearchFormField> {
     var themeProvider = Provider.of<ThemeProvider>(context);
     var height = context.height;
     return TextFormField(
+      maxLines: widget.maxLines,
       style: Theme.of(context).textTheme.bodySmall,
       cursorColor: EventlyColors.mainBlue,
       cursorHeight: height * 0.03,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       autocorrect: false,
+      validator: widget.validator,
       decoration: InputDecoration(
           filled: true,
-          hintText: AppLocalizations.of(context)!.searchForEvent,
+          hintText: widget.hintText,
           hintStyle: Theme.of(context).textTheme.bodySmall,
           hoverColor:
           themeProvider.isDark
@@ -44,8 +57,11 @@ class _SearchFormFieldState extends State<SearchFormField> {
               ? Theme.of(context).cardColor
               : EventlyColors.white,
           suffixIcon:
-          Icon(Icons.search_rounded),
-          suffixIconColor: Theme.of(context).primaryColor
+              widget.isSuffix ?
+              Icon(Icons.search_rounded)
+                  : SizedBox(),
+          suffixIconColor: Theme.of(context).primaryColor,
+        
       ),
     );
   }

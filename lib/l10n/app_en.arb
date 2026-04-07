@@ -47,5 +47,6 @@
     "bookClub": "Book Club",
     "meeting": "Meeting",
     "exhibition": "Exhibition",
-    "searchForEvent" : "Search for event"
+    "searchForEvent" : "Search for event",
+    "addEvent" : "Add Event"
 }
