@@ -168,7 +168,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     )
                 ),
-                Text("Title",style: Theme.of(context).textTheme.titleLarge,),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: height * 0.01
+                  ),
+                  child: Text("Title",style: Theme.of(context).textTheme.titleLarge,),
+                ),
                 SearchFormField(
                   hintText: "Event Title",
                   validator: (text) {
