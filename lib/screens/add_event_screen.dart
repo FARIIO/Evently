@@ -186,7 +186,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
                 SearchFormField(
                   hintText: "Event Title",
-                  maxLines: 7,
+                  maxLines: 6,
                   validator: (text) {
                     if(text == null || text.trim().isEmpty){
                       return "Please Enter a Title";
