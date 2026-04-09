@@ -48,5 +48,15 @@
     "meeting": "اجتماعات",
     "exhibition": "معارض فنية",
     "searchForEvent" : "ابحث عن مناسبة",
-    "addEvent" : "إضافة مناسبة"
+    "addEvent" : "إضافة مناسبة",
+    "eventDetails" : "تفاصيل المناسبة",
+    "addEvent" : "أضف مناسبة",
+    "eventDetails" : "تفاصيل المناسبة",
+    "chooseTime" : "اختر الوقت",
+    "chooseDate" : "اختر التاريخ",
+    "eventDate" : "تاريخ المناسبة",
+    "eventTime" : "وقت المناسبة",
+    "title" : "عنوان",
+    "description" : "وصف",
+    "noEventsFound" : "! لا يوجد مناسبات"
 }

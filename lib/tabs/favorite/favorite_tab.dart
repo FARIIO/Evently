@@ -1,11 +1,13 @@
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/favorite/widgets/search_form_field.dart';
 import 'package:evently/tabs/home/widgets/event_item.dart';
 import 'package:evently/utils/dimensions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../l10n/app_localizations.dart';
 
 class FavoriteTab extends StatefulWidget{
@@ -14,12 +16,24 @@ class FavoriteTab extends StatefulWidget{
 }
 
 class _FavoriteTabState extends State<FavoriteTab> {
-  int selectedIndex = 0;
+  late EventProvider eventProvider;
+  late UserProvider userProvider;
 
+  int selectedIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    eventProvider.getFavoriteEvents(userProvider.currentUser!.id);
+    },);
+  }
   @override
   Widget build(BuildContext context) {
     var width = context.width;
     var height = context.height;
+    eventProvider = Provider.of<EventProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
@@ -40,14 +54,23 @@ class _FavoriteTabState extends State<FavoriteTab> {
                 },
               ),
               Expanded(
-                child: ListView.separated(
+                child:
+                eventProvider.favoriteList.isEmpty ?
+                    Center(
+                      child: Text(
+                          "No Favorite Events !",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    )
+                    :
+                ListView.separated(
                     itemBuilder: (context, index) {
-                      return EventItem();
+                      return EventItem(event: eventProvider.favoriteList[index]);
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height: height*0.01,);
                     },
-                    itemCount: 10
+                    itemCount: eventProvider.favoriteList.length
                 ),
               ),
             ],
