@@ -1,17 +1,24 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:evently/utils/evently_colors.dart';
 import 'package:evently/utils/evently_images.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/theme_provider.dart';
+import '../../../utils/custom_snack_bar.dart';
 
 class EventItem extends StatefulWidget{
   bool isSelected;
+  final Event event;
 
-  EventItem({super.key,this.isSelected = false});
+  EventItem({super.key,this.isSelected = false,required this.event});
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -21,6 +28,8 @@ class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
+    var eventProvider = Provider.of<EventProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     var width = context.width;
     var height = context.height;
     return InkWell(
@@ -39,11 +48,9 @@ class _EventItemState extends State<EventItem> {
           ),
           image: DecorationImage(
               image: AssetImage(
-                themeProvider.isDark ?
-                  EventlyImages.sportDark
-                    : EventlyImages.sportLight
+                widget.event.eventImage
               ),
-            fit: BoxFit.fill
+            fit: BoxFit.contain
           ),
         ),
         child: Padding(
@@ -71,7 +78,7 @@ class _EventItemState extends State<EventItem> {
                   )
                 ),
                 child: Text(
-                    "21 Jun",
+                    DateFormat("d MMM").format(widget.event.eventDate),
                   style: themeProvider.isDark ?
                       Theme.of(context).textTheme.labelSmall
                       : Theme.of(context).textTheme.titleSmall
@@ -96,19 +103,23 @@ class _EventItemState extends State<EventItem> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        "This is a Sport Event",
+                        widget.event.eventDescription,
                       style: Theme.of(context).textTheme.headlineMedium
                     ),
                     InkWell(
                       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
                       onTap: () {
-                        widget.isSelected = !widget.isSelected;
-                        setState(() {
-
-                        });
+                        eventProvider.updateFavorite(widget.event,userProvider.currentUser!.id);
+                        CustomSnackBar.show(
+                            context: context,
+                            title: "Woohoo!",
+                            message: "Favorites Updated Successfully",
+                            contentType: ContentType.success,
+                          color: Theme.of(context).primaryColor
+                        );
                       },
                       child: FaIcon(
-                        widget.isSelected ?
+                        widget.event.isFavorite ?
                         FontAwesomeIcons.solidHeart
                         : FontAwesomeIcons.heart,
                         color: Theme.of(context).primaryColor,

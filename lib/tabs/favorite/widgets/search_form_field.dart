@@ -5,16 +5,23 @@ import 'package:provider/provider.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../utils/evently_colors.dart';
 
+typedef OnChanged = void Function(String)?;
+typedef Validator = String? Function(String?)? ;
 class SearchFormField extends StatefulWidget{
   final bool isSuffix;
   final String hintText;
   final int maxLines;
-  String? Function(String?)? validator;
+  Validator validator;
+  OnChanged onChanged;
+  TextInputType? keyboardType;
    SearchFormField({
-    super.key,this.isSuffix = false,
+    super.key,
+    this.isSuffix = false,
     required this.hintText,
     this.maxLines = 1,
-    required this.validator
+    this.validator,
+    this.onChanged,
+     this.keyboardType = TextInputType.text
   });
 
   @override
@@ -32,9 +39,10 @@ class _SearchFormFieldState extends State<SearchFormField> {
       cursorColor: EventlyColors.mainBlue,
       cursorHeight: height * 0.03,
       textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: widget.keyboardType,
       autocorrect: false,
       validator: widget.validator,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
           filled: true,
           hintText: widget.hintText,

@@ -48,5 +48,13 @@
     "meeting": "Meeting",
     "exhibition": "Exhibition",
     "searchForEvent" : "Search for event",
-    "addEvent" : "Add Event"
+    "addEvent" : "Add Event",
+    "eventDetails" : "Event Details",
+    "chooseTime" : "Choose Time",
+    "chooseDate" : "Choose Date",
+    "eventDate" : "Event Date",
+    "eventTime" : "Event Time",
+    "title" : "Title",
+    "description" : "Description",
+    "noEventsFound" : "No Events Found !"
 }

@@ -5,12 +5,14 @@ import 'package:evently/tabs/profile/custom_container_button.dart';
 import 'package:evently/tabs/profile/custom_dropdown_menu.dart';
 import 'package:evently/tabs/profile/custom_theme_switch.dart';
 import 'package:evently/utils/evently_images.dart';
+import 'package:evently/utils/evently_routes.dart';
 import 'package:evently/utils/pick_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/theme_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/evently_colors.dart';
 
@@ -25,6 +27,8 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+
     var width = context.width;
     var height = context.height;
     return Padding(
@@ -82,7 +86,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     bottom: height * 0.01
               ),
               child: Text(
-                "Fares Ahmed",
+                userProvider.currentUser!.name,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
@@ -91,7 +95,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   bottom: height * 0.04
             ),
               child: Text(
-                  "fares.ahmed@gmail.com",
+                  userProvider.currentUser!.email,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -104,15 +108,23 @@ class _ProfileTabState extends State<ProfileTab> {
               paddingWidth: width * 0.05,
             ),
             CustomDropdownMenu(),
-            CustomContainerButton(
-              title: AppLocalizations.of(context)!.logout,
-              suffix: FaIcon(FontAwesomeIcons.arrowRightFromBracket,color: EventlyColors.red,),
-              paddingHeight:  height * 0.015,
-              paddingWidth: width * 0.05,
+            InkWell(
+              onTap: onLogOut,
+              overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
+              child: CustomContainerButton(
+                title: AppLocalizations.of(context)!.logout,
+                suffix: FaIcon(FontAwesomeIcons.arrowRightFromBracket,color: EventlyColors.red,),
+                paddingHeight:  height * 0.015,
+                paddingWidth: width * 0.05,
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void onLogOut() {
+    Navigator.pushNamedAndRemoveUntil(context, EventlyRoutes.loginScreen,(route) => false,);
   }
 }

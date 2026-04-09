@@ -1,14 +1,18 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:evently/firebase_utils.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/favorite/widgets/search_form_field.dart';
+import 'package:evently/utils/custom_snack_bar.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:evently/utils/evently_images.dart';
-import 'package:evently/utils/evently_routes.dart';
 import 'package:evently/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/theme_provider.dart';
 import '../tabs/home/widgets/tab_widget.dart';
 import '../utils/evently_colors.dart';
@@ -21,14 +25,24 @@ class AddEventScreen extends StatefulWidget{
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  var selectedEventCategory = "";
+  String selectedEventImage = "";
   int selectedIndex = 0;
   DateTime? selectedDate;
   String formatDate = "";
   TimeOfDay? selectedTime;
   String formatTime = "";
+  var title = "";
+  var description = "";
+  bool isDateEmpty = false;
+  bool isTimeEmpty = false;
+  late EventProvider eventProvider;
 
   @override
   Widget build(BuildContext context) {
+
+    var themeProvider = Provider.of<ThemeProvider>(context);
+    eventProvider = Provider.of<EventProvider>(context);
 
     List <String> eventCategory = [
       AppLocalizations.of(context)!.sport,
@@ -58,9 +72,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
       EventlyImages.meetingImageDark,
       EventlyImages.exhibitionImageDark,
     ];
-    var themeProvider = Provider.of<ThemeProvider>(context);
+    selectedEventCategory = eventCategory[selectedIndex];
+    selectedEventImage =
+    themeProvider.isDark ?
+    eventImageDark[selectedIndex] :eventImage[selectedIndex];
     var width = context.width;
     var height = context.height;
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.addEvent,
@@ -125,9 +144,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       width: 1
                     ),
                     image: DecorationImage(image: AssetImage(
-                      themeProvider.isDark ?
-                      eventImageDark[selectedIndex]
-                          : eventImage[selectedIndex]
+                      selectedEventImage
                     )
                         ,fit: BoxFit.contain),
                   ),
@@ -172,10 +189,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   padding: EdgeInsets.symmetric(
                       vertical: height * 0.01
                   ),
-                  child: Text("Title",style: Theme.of(context).textTheme.titleLarge,),
+                  child: Text(
+                    AppLocalizations.of(context)!.title,
+                    style: Theme.of(context).textTheme.titleLarge,),
                 ),
                 SearchFormField(
                   hintText: "Event Title",
+                  onChanged: (text) {
+                    title = text;
+                } ,
                   validator: (text) {
                     if(text == null || text.trim().isEmpty){
                       return "Please Enter a Title";
@@ -187,14 +209,19 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   padding: EdgeInsets.symmetric(
                     vertical: height * 0.01
                   ),
-                  child: Text("Description",style: Theme.of(context).textTheme.titleLarge,),
+                  child: Text(
+                    AppLocalizations.of(context)!.description
+                    ,style: Theme.of(context).textTheme.titleLarge,),
                 ),
                 SearchFormField(
-                  hintText: "Event Title",
+                  hintText: "Event Description",
                   maxLines: 6,
+                  onChanged: (text) {
+                    description = text;
+                  } ,
                   validator: (text) {
                     if(text == null || text.trim().isEmpty){
-                      return "Please Enter a Title";
+                      return "Please Enter a Description";
                     }
                     return null;
                   },
@@ -203,7 +230,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   spacing: width * 0.02,
                   children: [
                     FaIcon(FontAwesomeIcons.calendarDays,color: Theme.of(context).primaryColor,),
-                    Text("Event Date",style: Theme.of(context).textTheme.titleLarge,),
+                    Text(
+                      AppLocalizations.of(context)!.eventDate,
+                      style: Theme.of(context).textTheme.titleLarge,),
                     Spacer(),
                     TextButton(
                       style: ButtonStyle(
@@ -211,11 +240,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         textStyle: WidgetStatePropertyAll(
                           Theme.of(context).textTheme.labelSmall!.copyWith(
                             decoration: TextDecoration.underline,
-                            decorationColor: Theme.of(context).primaryColor
+                            decorationColor: isDateEmpty
+                                ? EventlyColors.red
+                                : Theme.of(context).primaryColor
                           )
                         ),
                         foregroundColor: WidgetStatePropertyAll(
-                          Theme.of(context).primaryColor
+                            isDateEmpty
+                                ? EventlyColors.red
+                                : Theme.of(context).primaryColor
                         )
                       ),
                       onPressed: () {
@@ -223,7 +256,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       },
                       child: Text(
                         selectedDate == null ?
-                          "Choose Date"
+                          AppLocalizations.of(context)!.chooseDate
                             : formatDate
                       ),)
                   ],
@@ -232,7 +265,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   spacing: width * 0.02,
                   children: [
                     FaIcon(FontAwesomeIcons.clock,color: Theme.of(context).primaryColor,),
-                    Text("Event Time",style: Theme.of(context).textTheme.titleLarge,),
+                    Text(
+                      AppLocalizations.of(context)!.eventTime,
+                      style: Theme.of(context).textTheme.titleLarge,),
                     Spacer(),
                     TextButton(
                       style: ButtonStyle(
@@ -240,11 +275,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           textStyle: WidgetStatePropertyAll(
                               Theme.of(context).textTheme.labelSmall!.copyWith(
                                   decoration: TextDecoration.underline,
-                                  decorationColor: Theme.of(context).primaryColor
+                                  decorationColor: isTimeEmpty
+                                      ? EventlyColors.red
+                                      : Theme.of(context).primaryColor
                               )
                           ),
                           foregroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).primaryColor
+                              isTimeEmpty
+                                  ? EventlyColors.red
+                                  : Theme.of(context).primaryColor
                           )
                       ),
                       onPressed: () {
@@ -252,7 +291,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     },
                       child: Text(
                           formatTime.isEmpty ?
-                              "Choose Time"
+                              AppLocalizations.of(context)!.chooseTime
                               : formatTime
                       ),)
                   ],
@@ -281,6 +320,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     if(selectedDate!=null){
       formatDate = DateFormat("MMM d,yyyy").format(selectedDate!);
     }
+    isDateEmpty = false;
     setState(() {
 
     });
@@ -295,16 +335,50 @@ class _AddEventScreenState extends State<AddEventScreen> {
     if(selectedTime!=null){
       formatTime = selectedTime!.format(context);
     }
+    isTimeEmpty = false;
     setState(() {
 
     });
   }
 
   void onButtonClick() {
+    setState(() {
+      isDateEmpty = formatDate.isEmpty;
+      isTimeEmpty = formatTime.isEmpty;
+    });
+
     if(widget.formKey.currentState!.validate() == true
         && formatTime.isNotEmpty
         && formatDate.isNotEmpty){
-      Navigator.pushReplacementNamed(context, EventlyRoutes.homeScreen);
+      Event event = Event(
+          eventCategory: selectedEventCategory,
+          eventTitle: title,
+          eventDescription: description,
+          eventDate: selectedDate!,
+          eventImage: selectedEventImage,
+          eventTime: formatTime
+      );
+      var userProvider = Provider.of<UserProvider>(context,listen: false);
+      FirebaseUtils.addEventToFireStore(event,userProvider.currentUser!.id)
+          .then((value) {
+            CustomSnackBar.show(
+                context: context,
+                title: "woohoo!",
+                message: "Event Added Successfully",
+                contentType: ContentType.success,
+                color: Theme.of(context).primaryColor
+            );
+            eventProvider.getAllEventsFromFireStore(userProvider.currentUser!.id);
+              Navigator.pop(context);
+          },);
+      //     .timeout(
+      //     Duration(milliseconds: 500),
+      //     onTimeout: () {
+      //       print("Event Added Successfully :)");
+      //       eventProvider.getAllEventsFromFireStore(userProvider.currentUser!.id);
+      //       Navigator.pop(context);
+      //     },
+      // );
     }
   }
 }

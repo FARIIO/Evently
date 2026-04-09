@@ -160,5 +160,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchForEvent => 'ابحث عن مناسبة';
 
   @override
-  String get addEvent => 'إضافة مناسبة';
+  String get addEvent => 'أضف مناسبة';
+
+  @override
+  String get eventDetails => 'تفاصيل المناسبة';
+
+  @override
+  String get chooseTime => 'اختر الوقت';
+
+  @override
+  String get chooseDate => 'اختر التاريخ';
+
+  @override
+  String get eventDate => 'تاريخ المناسبة';
+
+  @override
+  String get eventTime => 'وقت المناسبة';
+
+  @override
+  String get title => 'عنوان';
+
+  @override
+  String get description => 'وصف';
+
+  @override
+  String get noEventsFound => '! لا يوجد مناسبات';
 }

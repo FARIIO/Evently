@@ -1,11 +1,20 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:evently/firebase_utils.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/models/my_user.dart';
 import 'package:evently/providers/theme_provider.dart';
+import 'package:evently/utils/custom_snack_bar.dart';
+import 'package:evently/utils/evently_colors.dart';
 import 'package:evently/utils/evently_images.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:evently/widgets/custom_elevated_button.dart';
 import 'package:evently/widgets/custom_text_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import '../providers/event_provider.dart';
+import '../providers/user_provider.dart';
 import '../utils/dimensions.dart';
 import '../widgets/custom_text_form_field.dart';
 
@@ -15,6 +24,11 @@ class SignupScreen extends StatefulWidget{
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+    var formKey = GlobalKey<FormState>();
+    var nameController = TextEditingController(text: "Fares");
+    var emailController = TextEditingController(text: "fares@email.com");
+    var passwordController = TextEditingController(text: "123456");
+    var rePasswordController = TextEditingController(text: "123456");
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
@@ -28,115 +42,162 @@ class _SignupScreenState extends State<SignupScreen> {
                 vertical: height*0.01
             ),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Image.asset(EventlyImages.evently),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: height*0.02
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.createYourAccount,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  CustomTextFormField(
-                    prefixIcon: Icon(Icons.person_outline_outlined),
-                    hintText: AppLocalizations.of(context)!.enterName,
-                  ),
-                  CustomTextFormField(
-                    prefixIcon: Icon(Icons.email_outlined),
-                    hintText: AppLocalizations.of(context)!.enterEmail,
-                  ),
-                  CustomTextFormField(
-                    prefixIcon: Icon(Icons.lock_outline_rounded),
-                    hintText: AppLocalizations.of(context)!.enterPassword,
-                    isSuffixIcon: true,
-                  ),
-                  CustomTextFormField(
-                    prefixIcon: Icon(Icons.lock_outline_rounded),
-                    hintText: AppLocalizations.of(context)!.enterPassword,
-                    isSuffixIcon: true,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: height * 0.04,
-                      bottom: height * 0.02
-                    ),
-                    child: CustomElevatedButton(
-                      buttonColor: Theme.of(context).primaryColor,
-                      title: AppLocalizations.of(context)!.signUp,
-                      onButtonClick: onButtonClick,
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.alreadyHaveAccount,
-                        style: Theme.of(context).textTheme.bodySmall,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.asset(EventlyImages.evently),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: height*0.02
                       ),
-                      CustomTextButton(
-                        onPressed: onLoginClicked,
-                        text: AppLocalizations.of(context)!.login,
-                        textStyle: themeProvider.isDark
-                            ? Theme.of(context).textTheme.labelSmall!.copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: Theme.of(context).primaryColor,
-                        )
-                            : Theme.of(context).textTheme.displaySmall!.copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: Theme.of(context).primaryColor,
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: height * 0.02
+                      child: Text(
+                        AppLocalizations.of(context)!.createYourAccount,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
-                    child: Row(
+                    CustomTextFormField(
+                      prefixIcon: Icon(Icons.person_outline_outlined),
+                      hintText: AppLocalizations.of(context)!.enterName,
+                      keyboardType: TextInputType.name,
+                      controller: nameController,
+                      validator: (text) {
+                        if(text == null || text.trim().isEmpty){
+                          return "Please enter your name";
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextFormField(
+                      prefixIcon: Icon(Icons.email_outlined),
+                      hintText: AppLocalizations.of(context)!.enterEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      validator: (text) {
+                        if(text == null || text.trim().isEmpty){
+                          return "Please enter your email";
+                        }
+                        final bool emailValid =
+                        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(emailController.text);
+                        if(!emailValid){
+                          return "Please enter a Valid Email";
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextFormField(
+                      prefixIcon: Icon(Icons.lock_outline_rounded),
+                      hintText: AppLocalizations.of(context)!.enterPassword,
+                      isSuffixIcon: true,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      controller: passwordController,
+                      validator: (text) {
+                        if(text == null || text.trim().isEmpty){
+                          return "Please enter your password";
+                        }
+                        if(text.length<6){
+                          return "Password Should be greater than 6 numbers";
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextFormField(
+                      prefixIcon: Icon(Icons.lock_outline_rounded),
+                      hintText: AppLocalizations.of(context)!.enterPassword,
+                      isSuffixIcon: true,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      controller: rePasswordController,
+                      validator: (text) {
+                        if(text == null || text.trim().isEmpty){
+                          return "Please enter your password";
+                        }
+                        if(text != passwordController.text){
+                          return "Password doesn't match";
+                        }
+                        return null;
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: height * 0.04,
+                        bottom: height * 0.02
+                      ),
+                      child: CustomElevatedButton(
+                        buttonColor: Theme.of(context).primaryColor,
+                        title: AppLocalizations.of(context)!.signUp,
+                        onButtonClick: onSignUp,
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1,
-                            height: height * 0.01,
-                            color: Theme.of(context).dividerColor,
-                            endIndent: width * 0.04,
-                          ),
-                        ),
                         Text(
-                          AppLocalizations.of(context)!.or,
-                          style:  themeProvider.isDark
-                              ? Theme.of(context).textTheme.displayMedium
-                              : Theme.of(context).textTheme.labelMedium,
+                          AppLocalizations.of(context)!.alreadyHaveAccount,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        Expanded(
-                          child: Divider(
-                            height: height * 0.01,
-                            thickness: 1,
-                            color: Theme.of(context).dividerColor,
-                            indent: width * 0.04,
+                        CustomTextButton(
+                          onPressed: onLoginClicked,
+                          text: AppLocalizations.of(context)!.login,
+                          textStyle: themeProvider.isDark
+                              ? Theme.of(context).textTheme.labelSmall!.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Theme.of(context).primaryColor,
+                          )
+                              : Theme.of(context).textTheme.displaySmall!.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Theme.of(context).primaryColor,
                           ),
                         )
                       ],
                     ),
-                  ),
-                  CustomElevatedButton(
-                    isLogo: true,
-                    title: AppLocalizations.of(context)!.signUpWithGoogle,
-                    onButtonClick: (){
-                      //todo:Sign Up With Google
-                    },
-                    textStyle: themeProvider.isDark
-                        ? Theme.of(context).textTheme.displayMedium
-                        : Theme.of(context).textTheme.labelMedium,
-                    buttonColor: Theme.of(context).cardColor,
-                    isBorder: true,
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: height * 0.02
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              height: height * 0.01,
+                              color: Theme.of(context).dividerColor,
+                              endIndent: width * 0.04,
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.or,
+                            style:  themeProvider.isDark
+                                ? Theme.of(context).textTheme.displayMedium
+                                : Theme.of(context).textTheme.labelMedium,
+                          ),
+                          Expanded(
+                            child: Divider(
+                              height: height * 0.01,
+                              thickness: 1,
+                              color: Theme.of(context).dividerColor,
+                              indent: width * 0.04,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    CustomElevatedButton(
+                      isLogo: true,
+                      title: AppLocalizations.of(context)!.signUpWithGoogle,
+                      onButtonClick: onSignUpWithGoogle,
+                      textStyle: themeProvider.isDark
+                          ? Theme.of(context).textTheme.displayMedium
+                          : Theme.of(context).textTheme.labelMedium,
+                      buttonColor: Theme.of(context).cardColor,
+                      isBorder: true,
+                    )
+                  ],
+                ),
               ),
             ),
           )
@@ -144,11 +205,107 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void onButtonClick() {
-    Navigator.pushReplacementNamed(context, EventlyRoutes.homeScreen);
+  void onSignUp() async {
+    if(formKey.currentState?.validate() == true){
+      try {
+        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        print("Signed Up Successfully");
+       MyUser myUser = MyUser(
+           id: credential.user?.uid??'',
+           name: nameController.text,
+           email: emailController.text);
+
+        //todo:add users to firestore
+        await FirebaseUtils.addUserToFireStore(myUser);
+
+        //todo:save users in provider
+        var userProvider = Provider.of<UserProvider>(context,listen: false);
+        userProvider.updateUser(myUser);
+
+        //todo:reset the selected index
+        var eventProvider = Provider.of<EventProvider>(context,listen: false);
+        eventProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+
+
+        //todo:show snackbar
+        CustomSnackBar.show(
+            context: context,
+            title: "Woohoo!",
+            message: "Signed Up Successfully",
+            contentType: ContentType.success,
+          color: Theme.of(context).primaryColor
+        );
+
+        //todo:navigate to home
+        Navigator.pushReplacementNamed(context, EventlyRoutes.homeScreen);
+
+        print("user id : ${credential.user?.uid ?? ""}");
+
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+
+        } else if (e.code == 'email-already-in-use') {
+          CustomSnackBar.show(
+              context: context,
+              title: "Ooops!",
+              message: "The account already exists for that email.",
+              contentType: ContentType.failure,
+          );
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
   }
 
   void onLoginClicked() {
     Navigator.pushReplacementNamed(context, EventlyRoutes.loginScreen);
   }
+
+    Future<UserCredential> onSignUpWithGoogle()async {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Once signed in, return the UserCredential
+      MyUser myUser = MyUser(
+          id: userCredential.user?.uid ?? '',
+          name: userCredential.user?.displayName ?? '',
+          email: userCredential.user?.email ?? ''
+      );
+
+      //todo:save users in provider
+      var userProvider = Provider.of<UserProvider>(context,listen: false);
+      userProvider.updateUser(myUser);
+
+      //todo:reset the selected index
+      var eventProvider = Provider.of<EventProvider>(context,listen: false);
+      eventProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+
+      await FirebaseUtils.addUserToFireStore(myUser);
+      CustomSnackBar.show(
+          context: context,
+          title: "Woohoo!",
+          message: "Logged in Successfully",
+          contentType: ContentType.success,
+          color: Theme.of(context).primaryColor
+      );
+      Navigator.pushReplacementNamed(context, EventlyRoutes.homeScreen);
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
 }

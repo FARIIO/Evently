@@ -8,18 +8,28 @@ import 'package:evently/utils/evently_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+typedef Validator = String? Function(String?)?;
+
 class CustomTextFormField extends StatefulWidget{
   Widget prefixIcon;
   String hintText;
   bool isSuffixIcon;
   bool showPassword;
+  TextInputType? keyboardType;
+  Validator validator;
+  bool obscureText;
+  TextEditingController? controller;
 
   CustomTextFormField({
     super.key,
     required this.prefixIcon,
     required this.hintText,
     this.isSuffixIcon = false,
-    this.showPassword = false
+    this.showPassword = false,
+    this.keyboardType = TextInputType.text,
+    this.validator,
+    this.obscureText = false,
+    this.controller
   });
 
   @override
@@ -40,8 +50,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         cursorColor: EventlyColors.mainBlue,
         cursorHeight: height * 0.03,
         textInputAction: TextInputAction.next,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: widget.keyboardType,
         autocorrect: false,
+        validator: widget.validator,
+        obscureText: widget.obscureText,
+        controller: widget.controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           filled: true,
           prefixIcon: widget.prefixIcon,
