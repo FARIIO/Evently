@@ -149,7 +149,9 @@ class _EditEventDetailsScreenState extends State<EditEventDetailsScreen> {
                         width: 1
                     ),
                     image: DecorationImage(image: AssetImage(
-                        widget.event.eventImage
+                      themeProvider.isDark?
+                      eventImageDark[selectedIndex]
+                          : eventImage[selectedIndex]
                     )
                         ,fit: BoxFit.contain),
                   ),
@@ -358,16 +360,18 @@ class _EditEventDetailsScreenState extends State<EditEventDetailsScreen> {
     if(widget.formKey.currentState!.validate() == true
         && formatTime.isNotEmpty
         && formatDate.isNotEmpty){
+
       Event event = Event(
+          id: widget.event.id,
           eventCategory: selectedEventCategory,
-          eventTitle: title,
-          eventDescription: description,
+          eventTitle: titleController.text,
+          eventDescription: descriptionController.text,
           eventDate: selectedDate!,
           eventImage: selectedEventImage,
-          eventTime: formatTime
+          eventTime: formatTime,
       );
       var userProvider = Provider.of<UserProvider>(context,listen: false);
-      FirebaseUtils.updateEvent(event,userProvider.currentUser!.id,"new")
+      FirebaseUtils.updateEvent(event,userProvider.currentUser!.id)
           .then((value) {
         CustomSnackBar.show(
             context: context,

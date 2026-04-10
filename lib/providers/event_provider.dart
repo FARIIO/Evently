@@ -76,8 +76,8 @@ class EventProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> editEventDescription(Event event,String uId,String newValue) async {
-    FirebaseUtils.updateEvent(event, uId, newValue)
+  Future<void> editEvent(Event event,String uId,String newValue) async {
+    FirebaseUtils.updateEvent(event, uId)
         .then((value) {
       print("Event Updated Successfully :)");
       selectedIndex == 0
