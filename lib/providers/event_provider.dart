@@ -60,13 +60,6 @@ class EventProvider extends ChangeNotifier{
           : getFilterEventsFromFireStore(uId);
       getFavoriteEvents(uId);
     },);
-    //     .timeout(Duration(milliseconds: 100),onTimeout: (){
-    //       print("Is Favorite Updated Successfully :)");
-    //       selectedIndex == 0
-    //           ? getAllEventsFromFireStore()
-    //           : getFilterEventsFromFireStore();
-    //       getFavoriteEvents();
-    // });
     notifyListeners();
   }
 
@@ -83,13 +76,26 @@ class EventProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> editEventDescription(Event event,String uId,String newValue) async {
+    FirebaseUtils.updateEvent(event, uId, newValue)
+        .then((value) {
+      print("Event Updated Successfully :)");
+      selectedIndex == 0
+          ? getAllEventsFromFireStore(uId)
+          : getFilterEventsFromFireStore(uId);
+    },);
+    notifyListeners();
+  }
+
   Future<void> deleteEvent(Event event,String uId) async {
-    FirebaseUtils.getEventsCollection(uId)
-        .doc(event.id)
-        .delete()
+    FirebaseUtils.deleteEvent(event, uId)
         .then((value) {
       print("Event Deleted Successfully :)");
+      selectedIndex == 0
+          ? getAllEventsFromFireStore(uId)
+          : getFilterEventsFromFireStore(uId);
     },);
+    notifyListeners();
   }
 
   void changeSelectedIndex(int newIndex,String uId){
