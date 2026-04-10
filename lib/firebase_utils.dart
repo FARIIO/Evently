@@ -46,11 +46,16 @@ class FirebaseUtils {
   }
 
 
-  static Future<void> updateEvent(Event event,String uId, String description)async{
+  static Future<void> updateEvent(Event event,String uId)async{
     return await getEventsCollection(uId)
         .doc(event.id)
         .update({
-      "description": description
+      "title":       event.eventTitle,
+      "category":    event.eventCategory,
+      "description": event.eventDescription,
+      "eventDate":   event.eventDate.millisecondsSinceEpoch,
+      "eventTime":   event.eventTime,
+      "eventImage":  event.eventImage,
         });
   }
 }
