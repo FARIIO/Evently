@@ -4,21 +4,19 @@ import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/utils/dimensions.dart';
 import 'package:evently/utils/evently_colors.dart';
-import 'package:evently/utils/evently_images.dart';
 import 'package:evently/utils/evently_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/theme_provider.dart';
 import '../../../utils/custom_snack_bar.dart';
 
 class EventItem extends StatefulWidget{
-  bool isSelected;
+  final bool isSelected;
   final Event event;
 
-  EventItem({super.key,this.isSelected = false,required this.event});
+  const EventItem({super.key,this.isSelected = false,required this.event});
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -36,7 +34,9 @@ class _EventItemState extends State<EventItem> {
       overlayColor: WidgetStatePropertyAll(
         EventlyColors.transparent
       ),
-      onTap: onEventTab,
+      onTap: () {
+        Navigator.pushNamed(context, EventlyRoutes.eventDetailsScreen,arguments: widget.event);
+      },
       child: Container(
         height: height * 0.22,
         decoration: BoxDecoration(
@@ -100,11 +100,15 @@ class _EventItemState extends State<EventItem> {
                   )
                 ),
                 child: Row(
+                  spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                        widget.event.eventDescription,
-                      style: Theme.of(context).textTheme.headlineMedium
+                    Expanded(
+                      child: Text(
+                          widget.event.eventDescription,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     InkWell(
                       overlayColor: WidgetStatePropertyAll(EventlyColors.transparent),
@@ -133,9 +137,5 @@ class _EventItemState extends State<EventItem> {
         ),
       ),
     );
-  }
-
-  void onEventTab() {
-    Navigator.pushNamed(context, EventlyRoutes.eventDetailsScreen);
   }
 }

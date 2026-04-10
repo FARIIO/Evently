@@ -14,7 +14,6 @@ class CustomTextFormField extends StatefulWidget{
   Widget prefixIcon;
   String hintText;
   bool isSuffixIcon;
-  bool showPassword;
   TextInputType? keyboardType;
   Validator validator;
   bool obscureText;
@@ -25,7 +24,6 @@ class CustomTextFormField extends StatefulWidget{
     required this.prefixIcon,
     required this.hintText,
     this.isSuffixIcon = false,
-    this.showPassword = false,
     this.keyboardType = TextInputType.text,
     this.validator,
     this.obscureText = false,
@@ -37,6 +35,14 @@ class CustomTextFormField extends StatefulWidget{
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+ late bool showPassword;
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showPassword = widget.obscureText;
+  }
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
@@ -53,7 +59,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         keyboardType: widget.keyboardType,
         autocorrect: false,
         validator: widget.validator,
-        obscureText: widget.obscureText,
+        obscureText: showPassword,
         controller: widget.controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
@@ -83,13 +89,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           widget.isSuffixIcon
               ? IconButton(
               onPressed: () {
-                widget.showPassword = !widget.showPassword;
                 setState(() {
+                showPassword = !showPassword;
                 });
               },
               highlightColor: EventlyColors.transparent,
               icon:
-              widget.showPassword
+              !showPassword
                   ? Icon(Icons.remove_red_eye_outlined)
                   : Icon(Icons.remove_red_eye_rounded)
           )

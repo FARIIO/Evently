@@ -305,7 +305,7 @@ class _SignupScreenState extends State<SignupScreen> {
           contentType: ContentType.success,
           color: Theme.of(context).primaryColor
       );
-      Navigator.pushReplacementNamed(context, EventlyRoutes.homeScreen);
+      Navigator.pushReplacementNamed(context, EventlyRoutes.eventDetailsScreen);
       return await FirebaseAuth.instance.signInWithCredential(credential);
     }
 }

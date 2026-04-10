@@ -11,6 +11,7 @@ class SearchFormField extends StatefulWidget{
   final bool isSuffix;
   final String hintText;
   final int maxLines;
+  TextEditingController? controller;
   Validator validator;
   OnChanged onChanged;
   TextInputType? keyboardType;
@@ -21,7 +22,8 @@ class SearchFormField extends StatefulWidget{
     this.maxLines = 1,
     this.validator,
     this.onChanged,
-     this.keyboardType = TextInputType.text
+     this.keyboardType = TextInputType.text,
+     this.controller
   });
 
   @override
@@ -43,6 +45,7 @@ class _SearchFormFieldState extends State<SearchFormField> {
       autocorrect: false,
       validator: widget.validator,
       onChanged: widget.onChanged,
+      controller: widget.controller,
       decoration: InputDecoration(
           filled: true,
           hintText: widget.hintText,

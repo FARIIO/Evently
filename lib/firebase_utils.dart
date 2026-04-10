@@ -39,4 +39,18 @@ class FirebaseUtils {
     return querySnapShot.data();
   }
 
+  static Future<void> deleteEvent(Event event,String uId)async{
+   return await getEventsCollection(uId)
+        .doc(event.id)
+        .delete();
+  }
+
+
+  static Future<void> updateEvent(Event event,String uId, String description)async{
+    return await getEventsCollection(uId)
+        .doc(event.id)
+        .update({
+      "description": description
+        });
+  }
 }

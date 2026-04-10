@@ -6,6 +6,7 @@ import 'package:evently/providers/language_provider.dart';
 import 'package:evently/providers/theme_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/screens/add_event_screen.dart';
+import 'package:evently/screens/edit_event_details_screen.dart';
 import 'package:evently/screens/event_details_screen.dart';
 import 'package:evently/screens/forget_password_screen.dart';
 import 'package:evently/screens/home_screen.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
+import 'models/event_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,7 +74,15 @@ class Evently extends StatelessWidget{
         EventlyRoutes.signupScreen : (context) => SignupScreen(),
         EventlyRoutes.forgetPassword : (context) => ForgetPasswordScreen(),
         EventlyRoutes.addEventScreen : (context) => AddEventScreen(),
-        EventlyRoutes.eventDetailsScreen : (context) => EventDetailsScreen(),
+        EventlyRoutes.eventDetailsScreen : (context) {
+          Event event = ModalRoute.of(context)?.settings.arguments as Event;
+          return EventDetailsScreen(event: event,);
+        },
+
+        EventlyRoutes.editEventDetails : (context) {
+          Event event = ModalRoute.of(context)?.settings.arguments as Event;
+          return EditEventDetailsScreen(event: event);
+        },
       },
     );
   }
